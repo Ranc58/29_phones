@@ -26,13 +26,13 @@ def get_orders_with_non_edited_phones(orders):
 
 
 def correct_contact_phone(db_query):
-    for phone_number in db_query:
-        contact_phone = phone_number.contact_phone
+    for order in db_query:
+        contact_phone = order.contact_phone
         if not re.match(r'^\+7', contact_phone):
             contact_phone = '+7' + contact_phone
-        phone = phonenumbers.parse(contact_phone)
-        edited_phone = phone.national_number
-        phone_number.edited_contact_phone = edited_phone
+        phone_number = phonenumbers.parse(contact_phone)
+        edited_contact_phone = phone_number.national_number
+        order.edited_contact_phone = edited_contact_phone
     SESSION.commit()
 
 
