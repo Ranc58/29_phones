@@ -6,6 +6,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 import phonenumbers
+from models import Order as order_table
 
 CONNECT_TIMEOUT = int(getenv('CONNECT_TIMEOUT'))
 REQUEST_TIMEOUT = int(getenv('REQUEST_TIMEOUT'))
@@ -36,10 +37,10 @@ def correct_contact_phone(db_query):
     SESSION.commit()
 
 
-def daemonize_normalize_phones():
+def normalize_phones():
     while True:
         try:
-            orders = get_table()
+            orders = order_table
         except sqlalchemy.exc.OperationalError:
             time.sleep(CONNECT_TIMEOUT)
         else:
@@ -49,4 +50,4 @@ def daemonize_normalize_phones():
 
 
 if __name__ == '__main__':
-    daemonize_normalize_phones()
+    normalize_phones()

@@ -1,0 +1,11 @@
+[Unit]
+Description=Normalize phone numbers for Shop table.
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=3
+ExecStart=<PATH TO PYTHON> <PATH TO SCRIPT>
+
+[Install]
+WantedBy=multi-user.target
